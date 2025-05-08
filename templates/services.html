@@ -1,23 +1,59 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="p-5 text-center bg-image mt-5" style="
-background-image: url('static/services.jpg');
-height: 300px;
-background-size: cover;
-background-position: center;
-"></div>
-<div class="container text-center pt-5">
-    <div class="row align-items-start">
-      <div class="col">
-        Vores service
-      </div>
-      <div class="col">
-        Vores priser
-      </div>
-      <div class="col">
-        ?
-      </div>
+<!-- Hero Banner -->
+<div class="p-5 text-center bg-image mt-3 d-flex align-items-center" style="
+  background-image: url('static/services.jpg');
+  height: 300px;
+  background-size: cover;
+  background-position: center;">
+  <div class="container text-white">
+    <h1>Vores services</h1>
+  </div>
+</div>
+
+<!-- Heading -->
+<div class="container pt-5">
+  <div class="row">
+    <div class="col-8 mx-auto">
+      <h4>Vi tilbyder altid en fast pris på disse services</h4>
     </div>
+  </div>
+</div>
+
+<!-- Info Paragraph -->
+<div class="container">
+  <div class="row">
+    <div class="col-8 mx-auto">
+      Hos LC AutoEl-Teknik tilbyder vi service og reparation af alle bilmærker – også el- og hybridbiler.
+      Vi arbejder med elektriske systemer, klimaanlæg, fejlfinding og installation af ekstraudstyr.
+      Med moderne diagnosetestere og stor teknisk erfaring sikrer vi pålidelig service til både private, erhverv og samarbejdspartnere.
+    </div>
+  </div>
+</div>
+
+<!-- Services Row -->
+<div class="container text-center pt-5">
+  <div class="row align-items-start text-dark">
+
+    <div class="col bg-light rounded m-2 p-3 pt-4">
+      <img src="/static/wheel.png" class="img-fluid mb-3" style="max-height: 90px;">
+      <h5>Dækskifte</h5>
+      <p>Vi værdsætter din tid. Hos os bliver din bil færdig til aftalt tid – uden at gå på kompromis med kvaliteten.</p>
+    </div>
+
+    <div class="col bg-light rounded m-2 p-3 pt-4">
+      <img src="/static/customer-support.png" class="img-fluid mb-3" style="max-height: 90px;">
+      <h5>Lille og stor service</h5>
+      <p>Vores erfarne mekanikere leverer arbejde i topklasse med fokus på detaljer og langtidsholdbare løsninger.</p>
+    </div>
+
+    <div class="col bg-light rounded m-2 p-3 pt-4">
+      <img src="/static/trust.png" class="img-fluid mb-3" style="max-height: 90px;">
+      <h5></h5>
+      <p>Vi lægger vægt på gennemsigtighed og ærlig rådgivning. Du kan trygt overlade din bil i vores hænder.</p>
+    </div>
+
+  </div>
 </div>
 {% endblock %}
