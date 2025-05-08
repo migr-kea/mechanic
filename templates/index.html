@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <!-- Hero -->
+<div class="p-5 text-center bg-image mt-5" style="
+background-image: url('static/udenforværkstedet.jpg');
+height: 540px;
+background-size: cover;
+background-position: center;
+">
+<div class="mask rounded pb-5 pt-5" style="background-color: rgba(0, 0, 0, 0.6);">
+<div class="d-flex justify-content-center align-items-center h-100">
+  <div class="text-white">
+    <h1 class="mb-3">LC AutoEl-Teknik</h1>
+    <h4 class="mb-3">Slangerups førende autoværksted</h4>
+    <p> Velkommen til LC AutoEl-Teknik. Har du problemer med bilen? Så er du kommet til det rette sted. <br>
+        Vores dygtige mekanikere reparerer alle bilmærker - med garanti. <br><br>
+        Vi har over 20 års erfaring indenfor branchen, og vi er stolte af at levere service i topklasse. <br><br>
+        Uanset om det drejer sig om en simpel reparation, avanceret fejlfinding eller regelmæssig vedligeholdelse, <br>
+        står vi klar til at hjælpe dig med at holde din bil i perfekt stand.
+    </p>
+    <a data-mdb-ripple-init class="btn btn-outline-light btn-lg" href="/services.html" role="button">Se vores priser</a>
+    <a data-mdb-ripple-init class="btn btn-outline-light btn-lg" href="/booking.html" role="button">Book tid her</a>
+  </div>
+</div>
+</div>
+</div>
+<!-- Hero -->
+
+<!-- Header -->
+
+<div class="container text-center pt-5">
+    <h2>Det kan du forvente hos os</h2>
+
+
+</div>
+
+<!-- Collumn -->
+<div class="container text-center pt-3">
+    <div class="row align-items-start text-dark">
+  
+      <div class="col bg-light rounded m-2 p-3">
+        <img src="/static/stopwatch.png" class="img-fluid mb-3" style="max-height: 160px;">
+        <h5>Hurtig og præcis</h5>
+        <p>Vi værdsætter din tid. Hos os bliver din bil færdig til aftalt tid – uden at gå på kompromis med kvaliteten.</p>
+      </div>
+  
+      <div class="col bg-light rounded m-2 p-3">
+        <img src="/static/award.png" class="img-fluid mb-3" style="max-height: 160px;">
+        <h5>Høj kvalitet</h5>
+        <p>Vores erfarne mekanikere leverer arbejde i topklasse med fokus på detaljer og langtidsholdbare løsninger.</p>
+      </div>
+  
+      <div class="col bg-light rounded m-2 p-3">
+        <img src="/static/trust.png" class="img-fluid mb-3" style="max-height: 160px;">
+        <h5>Til at stole på</h5>
+        <p>Vi lægger vægt på gennemsigtighed og ærlig rådgivning. Du kan trygt overlade din bil i vores hænder.</p>
+      </div>
+  
+    </div>
+  </div>
+  
+{% endblock %}

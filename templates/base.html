@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LC AutoEl-Teknik</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+        --bs-body-font-family: 'Source Sans Pro', sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+        font-family: 'Bebas Neue', sans-serif;
+        letter-spacing: 0.5px;
+        }
+      </style>
+</head>
+<body>
+<!-- Navbar -->
+<div>
+    <nav class="navbar navbar-expand-lg fixed-top bg-light navbar-light">
+        <div class="container">
+        <a class="navbar-brand" href="#"><img id="MDB-logo"
+            src="/static/logo.jpeg" alt="MDB Logo"
+            draggable="false" height="30" /></a>
+        <button class="navbar-toggler" type="button" data-mdb-collapse-init data-mdb-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto align-items-center">
+            <li class="nav-item">
+                <a class="nav-link mx-2" href="/index.html"><i class="fas fa-plus-circle pe-2"></i>Hjem</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mx-2" href="/about.html"><i class="fas fa-bell pe-2"></i>Om os</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mx-2" href="/services.html"><i class="fas fa-heart pe-2"></i>Vores services</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mx-2" href="/booking.html"><i class="fas fa-heart pe-2"></i>Book en tid</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mx-2" href="/contact.html"><i class="fas fa-heart pe-2"></i>Kontakt</a>
+            </li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+</div>
+  <!-- Navbar -->
+  <div class="pt-5">
+    {% block content %}{% endblock %}
+  </div>
+
+    <footer style="background-color: white">
+      <div class="container p-4">
+        <div class="row">
+          <div class="col-lg-6 col-md-10 mb-4">
+            <img src="/static/trustpilot.avif" style="width: 200px";></img>
+            <p>
+              LC AutoEl-Teknik<br>
+              Tlf: 40272125<br>
+              Industrivej 21F<br>
+              3550 Slangerup
+            </p>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5 class="mb-3 text-dark">Links</h5>
+            <ul class="list-unstyled mb-0">
+              <li class="mb-1">
+                <a href="/index.html" style="color: #4f4f4f;">Hjem</a>
+              </li>
+              <li class="mb-1">
+                <a href="/about.html" style="color: #4f4f4f;">Om os</a>
+              </li>
+              <li class="mb-1">
+                <a href="/services.html" style="color: #4f4f4f;">Vores services</a>
+              </li>
+              <li class="mb-1">
+                <a href="/booking.html" style="color: #4f4f4f;">Book en tid</a>
+              </li>
+              <li class="mb-1">
+                <a href="/contact.html" style="color: #4f4f4f;">Kontakt</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5 class="mb-1 text-dark">Åbningstider:</h5>
+            <table class="table" style="border-color: #666;">
+              <tbody>
+                <tr>
+                  <td>Man - Fre:</td>
+                  <td>08:00 - 18:00</td>
+                </tr>
+                <tr>
+                  <td>Lør - Søn:</td>
+                  <td>08:00 - 13:00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        <p class="mb-1">
+          © 2025 Copyright:
+        <a class="text-dark" href="http://127.0.0.0:5000">LC AutoEl-Teknik </a>
+      </p>
+      <a class="text-dark" href="mailto:lc@lcautoelteknik.dk">Kontakt os</a>
+      </div>
+      <!-- Copyright -->
+    </footer>
+    
+  </div>
+  <!-- End of .container -->
+
+    
+</body>
+</html>
