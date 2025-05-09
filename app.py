@@ -22,5 +22,9 @@ def gallery():
 def booking():
     return render_template('booking.html')
 
+@app.route('/booking_admin')
+def booking_admin():
+    return render_template('booking_admin.html')
+
 if __name__ == '__main__':
     app.run(debug=True)

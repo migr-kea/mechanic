@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid my-5">
+  <div class="row text-center">
+
+    <!-- Ledige tider -->
+    <div class="col-12 col-md-4 mb-4">
+      <div class="p-4 bg-light border rounded shadow">
+        <h4 class="mb-3">Ledige tider</h4>
+        <ul class="list-group">
+          <li class="list-group-item">Mandag kl. 10</li>
+          <li class="list-group-item">Tirsdag kl. 13</li>
+          <li class="list-group-item">Søndag kl. 12</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bookede tider -->
+    <div class="col-12 col-md-4 mb-4">
+      <div class="p-4 bg-light border rounded shadow">
+        <h4 class="mb-3">Bookede tider</h4>
+        <ul class="list-group">
+          <li class="list-group-item">Mandag kl. 14 – Anders</li>
+          <li class="list-group-item">Tirsdag kl. 17 – Marie</li>
+          <li class="list-group-item">Fredag kl. 12 – Jens</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Detaljer -->
+    <div class="col-12 col-md-4 mb-4">
+      <div class="p-4 bg-body-secondary border rounded shadow">
+        <h4 class="mb-3">Detaljer</h4>
+        <p class="mb-4">Se detaljer på kunder her! ⬇️</p>
+
+        <div class="mb-4">
+          <strong>ANDERS – MANDAG KL. 14</strong><br>
+          🛠️ Serviceeftersyn<br>
+          🚗 Audi A4<br>
+          📞 12 34 56 78
+        </div>
+
+        <div class="mb-4">
+          <strong>MARIE – TIRSDAG KL. 17</strong><br>
+          🛠️ Dækservice<br>
+          🚗 VW Polo<br>
+          📞 98 76 54 32
+        </div>
+
+        <div class="mb-2">
+          <strong>JENS – FREDAG KL. 12</strong><br>
+          🛠️ Olie og bremser<br>
+          🚗 Toyota Yaris<br>
+          📞 44 55 66 77
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
