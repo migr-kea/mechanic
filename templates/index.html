@@ -2,13 +2,12 @@
 
 {% block content %}
     <!-- Hero -->
-<div class="p-5 text-center bg-image mt-3" style="
-background-image: url('static/udenforværkstedet.jpg');
-height: 540px;
-background-size: cover;
-background-position: center;
-">
-<div class="mask rounded pb-5 pt-5" style="background-color: rgba(0, 0, 0, 0.6);">
+<div class="position-relative overflow-hidden mt-3" style="height: 540px;">
+  <video autoplay muted loop playsinline class="position-absolute w-100 h-100" style="object-fit: cover; z-index: 0;">
+    <source src="{{ url_for('static', filename='hero_video.webm') }}" type="video/webm">
+    Din browser understøtter ikke video-tagget.
+  </video>
+  <div class="position-relative z-1 mask rounded pb-5 pt-5 text-center" style="background-color: rgba(0, 0, 0, 0.6); height: 100%;">
 <div class="d-flex justify-content-center align-items-center h-100">
   <div class="text-white">
     <h1 class="mb-3">LC AutoEl-Teknik</h1>
