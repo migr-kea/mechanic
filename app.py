@@ -46,7 +46,7 @@ def contact():
     return render_template('contact.html')
 
 @app.route('/services')
-def gallery():
+def services():
     return render_template('services.html')
 
 @app.route('/booking', methods=['GET', 'POST'])
@@ -54,31 +54,31 @@ def booking():
     if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
-        timeslot = request.form['timeslot']
-        selected_date = request.form['date']
-        selected_date_obj = datetime.strptime(selected_date, '%Y-%m-%d').date()
+        selection = request.form['datetime_slot']  # e.g. "2025-05-13|08:00"
+        selected_date_str, timeslot = selection.split('|')
+        selected_date = datetime.strptime(selected_date_str, '%Y-%m-%d').date()
 
-        # Check if slot is available for that day
-        existing = Booking.query.filter_by(timeslot=timeslot, date=selected_date_obj).first()
-        if not existing:
-            booking = Booking(name=name, email=email, timeslot=timeslot, date=selected_date_obj)
-            db.session.add(booking)
+        # Prevent double booking
+        if not Booking.query.filter_by(date=selected_date, timeslot=timeslot).first():
+            db.session.add(Booking(name=name, email=email, timeslot=timeslot, date=selected_date))
             db.session.commit()
             return redirect(url_for('booking'))
 
-    # Get selected date from query param or default to today
-    selected_date = request.args.get('date', date.today().isoformat())
-    selected_date_obj = datetime.strptime(selected_date, '%Y-%m-%d').date()
-
-    all_slots = generate_time_slots()
-    booked = [b.timeslot for b in Booking.query.filter_by(date=selected_date_obj).all()]
-    available_slots = [slot for slot in all_slots if slot not in booked]
-
+    # GET logic — no need for selected_date here
     days = get_next_5_days()
-    return render_template('booking.html',
-                        slots=available_slots,
-                        selected_date=selected_date,
-                        days=days)
+    slots = generate_time_slots()
+
+    slots_by_day = {}
+    for day in days:
+        available = []
+        for time in slots:
+            if not Booking.query.filter_by(date=day, timeslot=time).first():
+                value = f"{day.isoformat()}|{time}"
+                available.append((value, time))
+        if available:
+            slots_by_day[day.strftime('%A, %d %b')] = available
+
+    return render_template('booking.html', slots_by_day=slots_by_day)
 
 @app.route('/booking_admin')
 def booking_admin():
