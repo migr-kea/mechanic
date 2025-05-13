@@ -4,11 +4,37 @@
 <div class="container text-center mt-3">
     <div class="row align-items-start">
       <div class="col">
-        <h3>Book en tid til services</h1>
         <form method="POST">
-          <input type="text" name="name" placeholder="Your name" required><br>
-          <input type="email" name="email" placeholder="Your email" required><br>
-          <button type="submit">Book</button>
+          <!-- Name -->
+          <label>Your Name:</label><br>
+          <input type="text" name="name" required><br><br>
+
+          <!-- Email -->
+          <label>Your Email:</label><br>
+          <input type="email" name="email" required><br><br>
+
+          <!-- Date Selection -->
+          <label>Select a Date:</label><br>
+          <select name="date" onchange="this.form.submit()">
+            {% for day in days %}
+              <option value="{{ day.isoformat() }}" {% if day.isoformat() == selected_date %}selected{% endif %}>
+                {{ day.strftime('%A, %d %B %Y') }}
+              </option>
+            {% endfor %}
+          </select><br><br>
+
+          <!-- Time Slot Selection -->
+          <label>Select a Time Slot:</label><br>
+          {% if slots %}
+            <select name="timeslot" required>
+              {% for slot in slots %}
+                <option value="{{ slot }}">{{ slot }}</option>
+              {% endfor %}
+            </select><br><br>
+            <button type="submit">Book</button>
+          {% else %}
+            <p><strong>All time slots are booked for this day!</strong></p>
+          {% endif %}
         </form>
       </div>
       <div class="col">
