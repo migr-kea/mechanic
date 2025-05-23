@@ -27,7 +27,7 @@ background-position: center;
           <input type="text" name="telefon" placeholder="Telefon nr." required><br><br>
 
           {% for day, slots in slots_by_day.items() %}
-            <h4 class="display-6">{{ day }}</h4>
+            <h5>{{ day }}</h5>
             {% for value, label in slots %}
               <label>
                 <input type="radio" name="datetime_slot" value="{{ value }}" required>
