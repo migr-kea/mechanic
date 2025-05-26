@@ -1,12 +1,17 @@
 from datetime import datetime, timedelta, date
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
+from io import BytesIO
+import pyotp, qrcode, base64
+import secret
 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///bookings.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+app.secret_key = secret.app_pass
+TOTP_SECRET = secret.totp_pass
 
 class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -84,8 +89,42 @@ def booking():
 
     return render_template('booking.html', slots_by_day=slots_by_day)
 
+@app.route('/admin_login', methods=['GET', 'POST'])
+def admin_login():
+    if request.method == 'POST':
+        if request.form['password'] == secret.admin_pass:
+            session['2fa'] = True
+            return redirect(url_for('admin_2fa'))
+    return render_template('admin_login.html')
+
+@app.route('/admin_2fa', methods=['GET', 'POST'])
+def admin_2fa():
+    if not session.get('2fa'):
+        return redirect(url_for('admin_login'))
+    if request.method == 'POST':
+        if pyotp.TOTP(TOTP_SECRET).verify(request.form['code']):
+            session['admin'] = True
+            session.pop('2fa')
+            return redirect(url_for('booking_admin'))
+    return render_template('admin_2fa.html')
+
+@app.route('/admin_2fa_setup')
+def admin_2fa_setup():
+    totp = pyotp.TOTP(TOTP_SECRET)
+    uri = totp.provisioning_uri(name='Booking Admin', issuer_name='LC-AutoEl Teknik')
+
+    # Generate QR code in-memory
+    img = qrcode.make(uri)
+    buffer = BytesIO()
+    img.save(buffer, format='PNG')
+    qr_base64 = base64.b64encode(buffer.getvalue()).decode()
+
+    return render_template('admin_2fa_setup.html', qr_code=qr_base64, secret=TOTP_SECRET)
+
 @app.route('/booking_admin')
 def booking_admin():
+    if not session.get('admin'):
+        return redirect(url_for('admin_login'))
     return render_template('booking_admin.html')
 
 if __name__ == '__main__':
