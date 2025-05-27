@@ -40,6 +40,20 @@ def get_next_5_days():
     today = date.today()
     return [today + timedelta(days=i) for i in range(5)]
 
+def get_available_slots():
+    days = get_next_5_days()
+    slots = generate_time_slots()
+
+    slots_by_day = {}
+    for day in days:
+        available = []
+        for time in slots:
+            if not Booking.query.filter_by(date=day, timeslot=time).first():
+                available.append((day, time))  # tuple (date, time)
+        if available:
+            slots_by_day[day.strftime('%A, %d %b')] = available
+    return slots_by_day
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -125,7 +139,10 @@ def admin_2fa_setup():
 def booking_admin():
     if not session.get('admin'):
         return redirect(url_for('admin_login'))
-    return render_template('booking_admin.html')
+    
+    available_slots = get_available_slots()
+    bookings = Booking.query.order_by(Booking.date).all()
+    return render_template('booking_admin.html', bookings=bookings, available_slots=available_slots)
 
 if __name__ == '__main__':
     app.run(debug=True)
