@@ -31,7 +31,6 @@ background-position: center;
           <input type="email" name="email" placeholder="E-mail" required><br><br>
           <input type="text" name="nummerplade" placeholder="Nummerplade" required>
           <input type="text" name="telefon" placeholder="Telefon nr." required><br><br>
-
           {% for day, slots in slots_by_day.items() %}
             <h5>{{ day }}</h5>
             {% for value, label in slots %}

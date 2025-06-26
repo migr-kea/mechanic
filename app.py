@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta, date
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from io import BytesIO
 import pyotp, qrcode, base64
@@ -12,6 +12,12 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 app.secret_key = secret.app_pass
 TOTP_SECRET = secret.totp_pass
+
+app.permanent_session_lifetime = timedelta(minutes=10)  # logout after 10 mins
+
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
 
 class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -73,21 +79,38 @@ def services():
 @app.route('/booking', methods=['GET', 'POST'])
 def booking():
     if request.method == 'POST':
-        name = request.form['name']
-        email = request.form['email']
-        nummerplade = request.form['nummerplade']
-        telefon = request.form['telefon']
-        selection = request.form['datetime_slot']  # e.g. "2025-05-13|08:00"
-        selected_date_str, timeslot = selection.split('|')
-        selected_date = datetime.strptime(selected_date_str, '%Y-%m-%d').date()
+        try:
+            # Indlæs formularfelter
+            name = request.form['name']
+            email = request.form['email']
+            nummerplade = request.form['nummerplade']
+            telefon = request.form['telefon']
+            selection = request.form['datetime_slot']
 
-        # Prevent double booking
-        if not Booking.query.filter_by(date=selected_date, timeslot=timeslot).first():
-            db.session.add(Booking(name=name, email=email, nummerplade=nummerplade, telefon=telefon, timeslot=timeslot, date=selected_date))
+            # Opdel dato og tid
+            selected_date_str, timeslot = selection.split('|')
+            selected_date = datetime.strptime(selected_date_str, '%Y-%m-%d').date()
+
+            # Gem booking i databasen
+            booking = Booking(
+                name=name,
+                email=email,
+                nummerplade=nummerplade,
+                telefon=telefon,
+                timeslot=timeslot,
+                date=selected_date
+            )
+            db.session.add(booking)
             db.session.commit()
+
+            flash("Din booking blev gennemført!", "success")
             return redirect(url_for('booking'))
 
-    # GET logic — no need for selected_date here
+        except Exception as e:
+            flash("Noget gik galt. Prøv venligst igen.", "error")
+            return redirect(url_for('booking'))
+
+    # GET-forespørgsel – vis ledige tider
     days = get_next_5_days()
     slots = generate_time_slots()
 
@@ -102,6 +125,7 @@ def booking():
             slots_by_day[day.strftime('%A, %d %b')] = available
 
     return render_template('booking.html', slots_by_day=slots_by_day)
+
 
 @app.route('/admin_login', methods=['GET', 'POST'])
 def admin_login():
