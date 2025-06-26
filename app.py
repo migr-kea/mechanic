@@ -13,7 +13,7 @@ db = SQLAlchemy(app)
 app.secret_key = secret.app_pass
 TOTP_SECRET = secret.totp_pass
 
-app.permanent_session_lifetime = timedelta(minutes=10)  # logout after 10 mins
+app.permanent_session_lifetime = timedelta(minutes=10)  
 
 @app.before_request
 def make_session_permanent():
@@ -55,7 +55,7 @@ def get_available_slots():
         available = []
         for time in slots:
             if not Booking.query.filter_by(date=day, timeslot=time).first():
-                available.append((day, time))  # tuple (date, time)
+                available.append((day, time)) 
         if available:
             slots_by_day[day.strftime('%A, %d %b')] = available
     return slots_by_day
@@ -80,18 +80,15 @@ def services():
 def booking():
     if request.method == 'POST':
         try:
-            # Indlæs formularfelter
             name = request.form['name']
             email = request.form['email']
             nummerplade = request.form['nummerplade']
             telefon = request.form['telefon']
             selection = request.form['datetime_slot']
 
-            # Opdel dato og tid
             selected_date_str, timeslot = selection.split('|')
             selected_date = datetime.strptime(selected_date_str, '%Y-%m-%d').date()
 
-            # Gem booking i databasen
             booking = Booking(
                 name=name,
                 email=email,
@@ -110,7 +107,6 @@ def booking():
             flash("Noget gik galt. Prøv venligst igen.", "error")
             return redirect(url_for('booking'))
 
-    # GET-forespørgsel – vis ledige tider
     days = get_next_5_days()
     slots = generate_time_slots()
 
@@ -151,7 +147,6 @@ def admin_2fa_setup():
     totp = pyotp.TOTP(TOTP_SECRET)
     uri = totp.provisioning_uri(name='Booking Admin', issuer_name='LC-AutoEl Teknik')
 
-    # Generate QR code in-memory
     img = qrcode.make(uri)
     buffer = BytesIO()
     img.save(buffer, format='PNG')
